@@ -10,17 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161117072816) do
+ActiveRecord::Schema.define(version: 20161117075939) do
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.string   "description"
     t.string   "part_number"
-    t.decimal  "price"
     t.integer  "user_id"
+    t.decimal  "price",         precision: 5, scale: 2
+    t.string   "supplier_type"
+    t.integer  "supplier_id"
+    t.index ["supplier_type", "supplier_id"], name: "index_products_on_supplier_type_and_supplier_id"
     t.index ["user_id"], name: "index_products_on_user_id"
+  end
+
+  create_table "products_users", id: false, force: :cascade do |t|
+    t.integer "user_id",    null: false
+    t.integer "product_id", null: false
   end
 
   create_table "publications", force: :cascade do |t|
@@ -31,6 +39,10 @@ ActiveRecord::Schema.define(version: 20161117072816) do
     t.boolean  "single_issue"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "users", force: :cascade do |t|
