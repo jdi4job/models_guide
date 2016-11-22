@@ -1,7 +1,8 @@
 class Product < ApplicationRecord
   # self.primary_key = "name"
 
-  validates :name, presence: true
+  validates :name, absence: true
+
 
   def self.demo_01
     p = Product.new
